@@ -9,6 +9,15 @@ import soundfile as sf
 def main(argv):
     files = glob('input/*.jpg')
     audiofiles = glob('input/*.wav')
+    if len(argv) == 2:
+        if argv[1] == "mono":
+            for i in files:
+                imgmpl = plt.imread(i)
+                data = imgmpl/255
+                data = data.flatten()
+                basename = os.path.splitext(os.path.basename(i))[0]
+                outputfile = f"output/{basename}.wav"
+                sf.write(outputfile, data, 44100)
     if not files and not audiofiles:
         print("Input folder is empty, please try again")
         sys.exit()
